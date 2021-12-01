@@ -1,11 +1,8 @@
 package ru.gb.products;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,17 +35,7 @@ public class ProductController {
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addProduct(@RequestBody Product product){
+    public void addProduct(@RequestBody Product product) {
         repository.save(product);
     }
-
-
-
-
-
-
-
-
-
-
 }

@@ -2,15 +2,13 @@ package ru.gb.products;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Arrays;
-import java.util.List;
 
 @Controller
 @RequestMapping("/products")
@@ -22,10 +20,9 @@ public class ProductController {
 
     private final String serverUrl = "http://backend/shop/products";
 
-
     @GetMapping
     public String getAllProducts(Model model) {
-        Product[] products =  restTemplate.getForObject(serverUrl, Product[].class);
+        Product[] products = restTemplate.getForObject(serverUrl, Product[].class);
         Product newProduct = new Product();
         model.addAttribute("products", products);
         model.addAttribute("newProduct", newProduct);
@@ -40,13 +37,9 @@ public class ProductController {
     }
 
     @PostMapping()
-    public String addProduct(@ModelAttribute ("newProduct") Product newProduct) {
-        restTemplate.postForLocation(  serverUrl +"/add", newProduct);
+    public String addProduct(@ModelAttribute("newProduct") Product newProduct) {
+        restTemplate.postForLocation(serverUrl + "/add", newProduct);
         return "redirect:http://localhost:8080/shop/products";
     }
-
-
-
-
 
 }
